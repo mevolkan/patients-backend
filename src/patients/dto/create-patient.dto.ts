@@ -1,1 +1,1 @@
-export class CreatePateintDto {}
+export class CreatePatientDto {}
