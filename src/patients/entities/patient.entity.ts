@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Vital } from 'src/vitals/entities/vital.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class Patient {
@@ -16,4 +17,7 @@ export class Patient {
 
   @Column()
   gender: string;
+
+  @OneToMany(() => Vital, (vital) => vital.patient)
+  vitals: Vital[];
 }
