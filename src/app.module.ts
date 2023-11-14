@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PateintsModule } from './pateints/pateints.module';
+import { PatientsModule } from './patients/patients.module';
 
 import 'dotenv/config';
 @Module({
@@ -17,7 +17,7 @@ import 'dotenv/config';
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
-    PateintsModule,
+    PatientsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
