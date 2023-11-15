@@ -6,8 +6,8 @@ export class Vital {
   @PrimaryGeneratedColumn('uuid')
   vitalId: number;
 
-  @Column()
-  date: Date;
+  @Column({ type: 'date' })
+  date: string;
 
   @Column()
   height: string;
@@ -26,6 +26,9 @@ export class Vital {
 
   @Column({ nullable: true })
   comments: string;
+
+  @Column()
+  patientId: number;
 
   @ManyToOne(() => Patient, (patient) => patient.vitals)
   patient: Patient;

@@ -1,5 +1,5 @@
 export class CreateVitalDto {
-  readonly date: Date;
+  readonly date: string;
   readonly height: string;
   readonly weight: string;
   readonly bmi: string;

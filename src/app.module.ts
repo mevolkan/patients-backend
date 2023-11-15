@@ -16,7 +16,7 @@ import 'dotenv/config';
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DATABASE,
       entities: ['dist/**/*.entity{.ts,.js}'],
-      // synchronize: true,
+      synchronize: true,
     }),
     PatientsModule,
     VitalsModule,

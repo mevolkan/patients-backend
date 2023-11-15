@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Vital } from './entities/vital.entity';
 import { Response } from 'express';
+import { Patient } from 'src/patients/entities/patient.entity';
 
 @Injectable()
 export class VitalsService {
@@ -24,6 +25,7 @@ export class VitalsService {
       comments,
       patientId,
     } = createVitalDto;
+
     const newVital = this.vitalRepository.create({
       date: date,
       height: height,
@@ -32,7 +34,7 @@ export class VitalsService {
       generalHealth: generalHealth,
       takingDrugs: takingDrugs,
       comments: comments,
-      // patientId: patientId,
+      patientId: patientId,
     });
     return this.vitalRepository.save(newVital);
   }
@@ -76,6 +78,7 @@ export class VitalsService {
           generalHealth: generalHealth,
           takingDrugs: takingDrugs,
           comments: comments,
+          patientId: patientId,
         },
       );
       return res.status(200).json({
