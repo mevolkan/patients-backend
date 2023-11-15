@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Res,
+} from '@nestjs/common';
 import { VitalsService } from './vitals.service';
 import { CreateVitalDto } from './dto/create-vital.dto';
 import { UpdateVitalDto } from './dto/update-vital.dto';
@@ -13,22 +22,26 @@ export class VitalsController {
   }
 
   @Get()
-  findAll() {
-    return this.vitalsService.findAll();
+  findAll(@Res() res: Response) {
+    return this.vitalsService.findAll(res);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.vitalsService.findOne(+id);
+  @Get(':vitalId')
+  findOne(@Param('vitalId') vitalId: number, @Res() res: Response) {
+    return this.vitalsService.findOne(+vitalId, res);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateVitalDto: UpdateVitalDto) {
-    return this.vitalsService.update(+id, updateVitalDto);
+  @Patch(':vitalId')
+  update(
+    @Param('vitalId') vitalId: number,
+    @Body() updateVitalDto: UpdateVitalDto,
+    @Res() res: Response,
+  ) {
+    return this.vitalsService.update(+vitalId, updateVitalDto, res);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.vitalsService.remove(+id);
+  @Delete(':vitalId')
+  delete(@Param('vitalId') vitalId: number, @Res() res: Response) {
+    return this.vitalsService.delete(+vitalId, res);
   }
 }
