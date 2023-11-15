@@ -1,11 +1,40 @@
 import { Injectable } from '@nestjs/common';
 import { CreateVitalDto } from './dto/create-vital.dto';
 import { UpdateVitalDto } from './dto/update-vital.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Vital } from './entities/vital.entity';
+import { Response } from '@nestjs/common';
 
 @Injectable()
 export class VitalsService {
-  create(createVitalDto: CreateVitalDto) {
-    return 'This action adds a new vital';
+  constructor(
+    @InjectRepository(Vital)
+    private vitalRepository: Repository<Vital>,
+  ) {}
+
+  async create(createVitalDto: CreateVitalDto) {
+    const {
+      date,
+      height,
+      weight,
+      bmi,
+      generalHealth,
+      takingDrugs,
+      comments,
+      patientId,
+    } = createVitalDto;
+    const newVital = this.vitalRepository.create({
+      date: date,
+      height: height,
+      weight: weight,
+      bmi: bmi,
+      generalHealth: generalHealth,
+      takingDrugs: takingDrugs,
+      comments: comments,
+      // patientId: patientId,
+    });
+    return this.vitalRepository.save(newVital);
   }
 
   findAll() {
@@ -20,7 +49,7 @@ export class VitalsService {
     return `This action updates a #${id} vital`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} vital`;
+  delete(id: number) {
+    return `This action deletes a #${id} vital`;
   }
 }
