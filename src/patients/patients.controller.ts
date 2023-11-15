@@ -28,20 +28,20 @@ export class PatientsController {
   }
 
   @Get(':patientId')
-  findOne(@Param('patientId') patientId: string) {
-    return this.patientsService.findOne(+patientId);
+  findOne(@Param('patientId') patientId: number, @Res() res: Response) {
+    return this.patientsService.findOne(+patientId, res);
   }
 
   @Patch(':patientId')
   update(
-    @Param('patientId') patientId: string,
+    @Param('patientId') patientId: number,
     @Body() updatePateintDto: UpdatePatientDto,
   ) {
     return this.patientsService.update(+patientId, updatePateintDto);
   }
 
   @Delete(':patientId')
-  remove(@Param('patientId') patientId: string) {
+  remove(@Param('patientId') patientId: number) {
     return this.patientsService.remove(+patientId);
   }
 }

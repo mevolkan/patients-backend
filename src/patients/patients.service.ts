@@ -25,15 +25,19 @@ export class PatientsService {
     return res.status(404).json({ msg: 'patient not found.' });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} pateint`;
+  async findOne(patientId: number, res: Response) {
+    const patient = await this.patientRepository.findOneBy({ patientId });
+    if (patient) {
+      return res.status(200).json(patient);
+    }
+    return res.status(404).json({ msg: 'patient not found.' });
   }
 
-  update(id: number, updatePatientDto: UpdatePatientDto) {
-    return `This action updates a #${id} pateint`;
+  update(patientId: number, updatePatientDto: UpdatePatientDto) {
+    return `This action updates a #${patientId} pateint`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} pateint`;
+  remove(patientId: number) {
+    return `This action removes a #${patientId} pateint`;
   }
 }
