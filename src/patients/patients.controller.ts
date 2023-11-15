@@ -36,8 +36,9 @@ export class PatientsController {
   update(
     @Param('patientId') patientId: number,
     @Body() updatePateintDto: UpdatePatientDto,
+    @Res() res: Response,
   ) {
-    return this.patientsService.update(+patientId, updatePateintDto);
+    return this.patientsService.update(+patientId, updatePateintDto, res);
   }
 
   @Delete(':patientId')

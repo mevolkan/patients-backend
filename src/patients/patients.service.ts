@@ -13,8 +13,15 @@ export class PatientsService {
     private patientRepository: Repository<Patient>,
   ) {}
 
-  create(createPatientDto: CreatePatientDto) {
-    return 'This action adds a new pateint';
+  async create(createPatientDto: CreatePatientDto) {
+    const { firstName, lastName, dob, gender } = createPatientDto;
+    const newPatient = this.patientRepository.create({
+      firstName: firstName,
+      lastName: lastName,
+      dob: dob,
+      gender: gender,
+    });
+    return this.patientRepository.save(newPatient);
   }
 
   async findAll(res: Response) {
@@ -33,8 +40,28 @@ export class PatientsService {
     return res.status(404).json({ msg: 'patient not found.' });
   }
 
-  update(patientId: number, updatePatientDto: UpdatePatientDto) {
-    return `This action updates a #${patientId} pateint`;
+  async update(
+    patientId: number,
+    updatePatientDto: UpdatePatientDto,
+    res: Response
+  ) {
+    const { firstName, lastName, dob, gender } = updatePatientDto;
+    const patient = await this.patientRepository.findOneBy({ patientId });
+    if (patient) {
+      await this.patientRepository.update(
+        { patientId: patientId },
+        {
+          firstName: firstName,
+          lastName: lastName,
+          dob: dob,
+          gender: gender,
+        },
+      );
+      return res.status(200).json({
+        msg: 'patient #${patientId} #${firstName} updated successfully.',
+      });
+    }
+    return res.status(404).json({ msg: 'patient not found.' });
   }
 
   remove(patientId: number) {
