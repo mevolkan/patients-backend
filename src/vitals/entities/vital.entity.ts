@@ -4,7 +4,7 @@ import { Patient } from 'src/patients/entities/patient.entity';
 @Entity()
 export class Vital {
   @PrimaryGeneratedColumn('uuid')
-  vitalId: string;
+  vitalId: number;
 
   @Column()
   date: Date;
