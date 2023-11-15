@@ -45,7 +45,7 @@ export class VitalsService {
     return res.status(404).json({ msg: 'vital not found' });
   }
 
-  findOne(vitalId: number, res: Response) {
+  async findOne(vitalId: number, res: Response) {
     const vital = await this.vitalRepository.findOneBy({ vitalId });
     if (vital) {
       return res.status(200).json(vital);
@@ -85,7 +85,11 @@ export class VitalsService {
     return res.status(404).json('Vital not found');
   }
 
-  delete(vitalId: number) {
-    return `This action deletes a #${vitalId} vital`;
+  async delete(vitalId: number, res: Response) {
+    const vital = await this.vitalRepository.findOneBy({ vitalId });
+    if (vital) {
+      return res.status(200).json({ msg: 'vital deleted successfully.' });
+    }
+    return res.status(404).json({ msg: 'vital not found.' });
   }
 }

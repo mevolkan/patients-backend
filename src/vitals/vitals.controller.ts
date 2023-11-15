@@ -11,6 +11,7 @@ import {
 import { VitalsService } from './vitals.service';
 import { CreateVitalDto } from './dto/create-vital.dto';
 import { UpdateVitalDto } from './dto/update-vital.dto';
+import { Response } from 'express';
 
 @Controller('vitals')
 export class VitalsController {
