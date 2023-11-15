@@ -42,7 +42,7 @@ export class PatientsController {
   }
 
   @Delete(':patientId')
-  remove(@Param('patientId') patientId: number) {
-    return this.patientsService.remove(+patientId);
+  delete(@Param('patientId') patientId: number, @Res() res: Response) {
+    return this.patientsService.delete(+patientId, res);
   }
 }

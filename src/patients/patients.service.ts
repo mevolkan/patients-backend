@@ -43,7 +43,7 @@ export class PatientsService {
   async update(
     patientId: number,
     updatePatientDto: UpdatePatientDto,
-    res: Response
+    res: Response,
   ) {
     const { firstName, lastName, dob, gender } = updatePatientDto;
     const patient = await this.patientRepository.findOneBy({ patientId });
@@ -64,7 +64,21 @@ export class PatientsService {
     return res.status(404).json({ msg: 'patient not found.' });
   }
 
-  remove(patientId: number) {
-    return `This action removes a #${patientId} pateint`;
+  async remove(patientId: number, res: Response) {
+    const patient = await this.patientRepository.findOneBy({ patientId });
+    if (patient) {
+      await this.patientRepository.remove(patient);
+      return res.status(200).json({ msg: 'patient removed successfully.' });
+    }
+    return res.status(404).json({ msg: 'patient not found.' });
+  }
+
+  async delete(patientId: number, res: Response) {
+    const patient = await this.patientRepository.findOneBy({ patientId });
+    if (patient) {
+      await this.patientRepository.delete(patient);
+      return res.status(200).json({ msg: 'patient deleted successfully.' });
+    }
+    return res.status(404).json({ msg: 'patient not found.' });
   }
 }
