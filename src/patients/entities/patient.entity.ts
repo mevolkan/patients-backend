@@ -12,8 +12,8 @@ export class Patient {
   @Column()
   lastName: string;
 
-  @Column()
-  dob: Date;
+  @Column({ type: 'date' })
+  dob: string;
 
   @Column()
   gender: string;

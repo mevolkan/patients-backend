@@ -1,7 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Res,
+} from '@nestjs/common';
 import { PatientsService } from './patients.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
+import { Response } from 'express';
 
 @Controller('patients')
 export class PatientsController {
@@ -13,22 +23,25 @@ export class PatientsController {
   }
 
   @Get()
-  findAll() {
-    return this.patientsService.findAll();
+  findAll(@Res() res: Response) {
+    return this.patientsService.findAll(res);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.patientsService.findOne(+id);
+  @Get(':patientId')
+  findOne(@Param('patientId') patientId: string) {
+    return this.patientsService.findOne(+patientId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePateintDto: UpdatePatientDto) {
-    return this.patientsService.update(+id, updatePateintDto);
+  @Patch(':patientId')
+  update(
+    @Param('patientId') patientId: string,
+    @Body() updatePateintDto: UpdatePatientDto,
+  ) {
+    return this.patientsService.update(+patientId, updatePateintDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.patientsService.remove(+id);
+  @Delete(':patientId')
+  remove(@Param('patientId') patientId: string) {
+    return this.patientsService.remove(+patientId);
   }
 }
