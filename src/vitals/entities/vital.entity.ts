@@ -18,13 +18,13 @@ export class Vital {
   @Column()
   bmi: string;
 
-  @Column()
+  @Column({ nullable: true })
   generalHealth: string;
 
-  @Column()
+  @Column({ nullable: true })
   takingDrugs: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   comments: string;
 
   @ManyToOne(() => Patient, (patient) => patient.vitals)
