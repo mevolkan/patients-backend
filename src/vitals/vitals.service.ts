@@ -4,7 +4,7 @@ import { UpdateVitalDto } from './dto/update-vital.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Vital } from './entities/vital.entity';
-import { Response } from '@nestjs/common';
+import { Response } from 'express';
 
 @Injectable()
 export class VitalsService {
@@ -37,19 +37,55 @@ export class VitalsService {
     return this.vitalRepository.save(newVital);
   }
 
-  findAll() {
-    return `This action returns all vitals`;
+  async findAll(res: Response) {
+    const vital = await this.vitalRepository.find();
+    if (vital.length !== 0) {
+      return res.status(200).json(vital);
+    }
+    return res.status(404).json({ msg: 'vital not found' });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} vital`;
+  findOne(vitalId: number, res: Response) {
+    const vital = await this.vitalRepository.findOneBy({ vitalId });
+    if (vital) {
+      return res.status(200).json(vital);
+    }
+    return res.status(404).json({ msg: 'vital not found' });
   }
 
-  update(id: number, updateVitalDto: UpdateVitalDto) {
-    return `This action updates a #${id} vital`;
+  async update(vitalId: number, updateVitalDto: UpdateVitalDto, res: Response) {
+    const {
+      date,
+      height,
+      weight,
+      bmi,
+      generalHealth,
+      takingDrugs,
+      comments,
+      patientId,
+    } = updateVitalDto;
+    const vital = await this.vitalRepository.findOneBy({ vitalId });
+    if (vital) {
+      await this.vitalRepository.update(
+        { vitalId: vitalId },
+        {
+          date: date,
+          height: height,
+          weight: weight,
+          bmi: bmi,
+          generalHealth: generalHealth,
+          takingDrugs: takingDrugs,
+          comments: comments,
+        },
+      );
+      return res.status(200).json({
+        msg: 'vital #${vitalId} updated succesfully',
+      });
+    }
+    return res.status(404).json('Vital not found');
   }
 
-  delete(id: number) {
-    return `This action deletes a #${id} vital`;
+  delete(vitalId: number) {
+    return `This action deletes a #${vitalId} vital`;
   }
 }
