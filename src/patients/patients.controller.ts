@@ -32,6 +32,11 @@ export class PatientsController {
     return this.patientsService.findOne(+patientId, res);
   }
 
+  @Get('/report/:patientId')
+  findReport(@Param('patientId') patientId: number, @Res() res: Response) {
+    return this.patientsService.findOne(+patientId, res);
+  }
+
   @Patch(':patientId')
   update(
     @Param('patientId') patientId: number,
