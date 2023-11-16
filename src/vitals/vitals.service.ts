@@ -55,9 +55,16 @@ export class VitalsService {
   }
 
   async findReport(res: Response) {
-    const report = await this.vitalRepository.find({
-      relations: ['patient'],
-    });
+    const report = await this.vitalRepository
+      .createQueryBuilder('report')
+      .select('patient.firstName', 'firstName')
+      .addSelect('patient.lastName', 'lastName')
+      .addSelect('pateient.dob', 'dob')
+      .addSelect('vital.bmi', 'bmi')
+      .addSelect('vital.date', 'date')
+      .innerJoin('vital', 'vital.patientId=patient.patientId')
+      .getMany();
+
     if (report) {
       return res.status(200).json(report);
     }
