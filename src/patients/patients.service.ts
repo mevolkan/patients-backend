@@ -40,15 +40,6 @@ export class PatientsService {
     return res.status(404).json({ msg: 'patient not found.' });
   }
 
-  async findReport(patientId: number, res: Response) {
-    const patient = await this.patientRepository.findOneBy({ patientId });
-    if (patient) {
-      return res.status(200).json(patient);
-    }
-    return res.status(404).json({ msg: 'patient not found.' });
-  }
-
-
   async update(
     patientId: number,
     updatePatientDto: UpdatePatientDto,

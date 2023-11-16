@@ -32,6 +32,12 @@ export class VitalsController {
     return this.vitalsService.findOne(+vitalId, res);
   }
 
+  @Get('/report/:patientId')
+  findReport(@Param('patientId') patientId: number, @Res() res: Response) {
+    return this.vitalsService.findOne(+patientId, res);
+  }
+
+
   @Patch(':vitalId')
   update(
     @Param('vitalId') vitalId: number,

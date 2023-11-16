@@ -54,6 +54,13 @@ export class VitalsService {
     }
     return res.status(404).json({ msg: 'vital not found' });
   }
+  async findReport(patientId: number, res: Response) {
+    const report = await this.vitalRepository.findOneBy({ patientId });
+    if (report) {
+      return res.status(200).json(report);
+    }
+    return res.status(404).json({ msg: 'patient not found.' });
+  }
 
   async update(vitalId: number, updateVitalDto: UpdateVitalDto, res: Response) {
     const {
