@@ -5,7 +5,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Vital } from './entities/vital.entity';
 import { Response } from 'express';
-import { Patient } from 'src/patients/entities/patient.entity';
 
 @Injectable()
 export class VitalsService {
@@ -44,7 +43,7 @@ export class VitalsService {
     if (vital.length !== 0) {
       return res.status(200).json(vital);
     }
-    return res.status(404).json({ msg: 'vital not found' });
+    return res.status(404).json({ msg: 'No vital found' });
   }
 
   async findOne(vitalId: number, res: Response) {
@@ -52,14 +51,17 @@ export class VitalsService {
     if (vital) {
       return res.status(200).json(vital);
     }
-    return res.status(404).json({ msg: 'vital not found' });
+    return res.status(404).json({ msg: 'No vital found' });
   }
-  async findReport(patientId: number, res: Response) {
-    const report = await this.vitalRepository.findOneBy({ patientId });
+
+  async findReport(res: Response) {
+    const report = await this.vitalRepository.find({
+      relations: ['patient'],
+    });
     if (report) {
       return res.status(200).json(report);
     }
-    return res.status(404).json({ msg: 'patient not found.' });
+    return res.status(404).json({ msg: 'No report found.' });
   }
 
   async update(vitalId: number, updateVitalDto: UpdateVitalDto, res: Response) {

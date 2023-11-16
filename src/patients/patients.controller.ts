@@ -32,7 +32,6 @@ export class PatientsController {
     return this.patientsService.findOne(+patientId, res);
   }
 
-
   @Patch(':patientId')
   update(
     @Param('patientId') patientId: number,
